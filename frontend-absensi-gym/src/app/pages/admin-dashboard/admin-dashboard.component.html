@@ -1,0 +1,108 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Dashboard Admin</h2>
+    <button class="btn btn-outline-danger" (click)="LogOut()">Log Out</button>
+  </div>
+
+  <h4 class="mb-4">Halo, admin {{ name }}</h4>
+
+  <!-- Tambah Jenis Latihan -->
+  <div class="card mb-4">
+    <div class="card-header">
+      Tambah Jenis Latihan
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="createTraining()" class="row g-2">
+        <div class="col-md-5">
+          <input [(ngModel)]="newTraining.name" name="name" class="form-control" placeholder="Nama" required />
+        </div>
+        <div class="col-md-5">
+          <input [(ngModel)]="newTraining.description" name="description" class="form-control" placeholder="Deskripsi" required />
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary w-100">Tambah</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Daftar Jenis Latihan -->
+  <div class="card mb-4">
+    <div class="card-header">
+      Daftar Jenis Latihan
+    </div>
+    <div class="card-body">
+      <div *ngFor="let t of trainingTypes" class="mb-3">
+        <div *ngIf="editingTraining?.id !== t.id" class="d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ t.name }}</strong> - {{ t.description }}
+          </div>
+          <div>
+            <button class="btn btn-sm btn-warning me-2" (click)="startEdit(t)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteTraining(t.id)">Hapus</button>
+          </div>
+        </div>
+
+        <div *ngIf="editingTraining?.id === t.id" class="row g-2">
+          <div class="col-md-4">
+            <input [(ngModel)]="editingTraining.name" name="editName" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <input [(ngModel)]="editingTraining.description" name="editDescription" class="form-control" />
+          </div>
+          <div class="col-md-4 d-flex gap-2">
+            <button class="btn btn-success" (click)="updateTraining()">Simpan</button>
+            <button class="btn btn-secondary" (click)="cancelEdit()">Batal</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notifikasi -->
+  <div *ngIf="message" class="alert alert-success">{{ message }}</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <!-- Tabel Absensi -->
+  <div class="card">
+    <div class="card-header">
+      Data Absensi Pengguna
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Email</th>
+            <th>Jenis Latihan</th>
+            <th>Catatan</th>
+            <th>Status</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of attendances; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ a.email }}</td>
+            <td>{{ a.training_name }}</td>
+            <td>{{ a.notes }}</td>
+            <td>
+              <span class="badge" [ngClass]="{
+                'bg-warning': a.status === 'pending',
+                'bg-success': a.status === 'approved',
+                'bg-danger': a.status === 'rejected'
+              }">
+                {{ a.status }}
+              </span>
+            </td>
+            <td>
+              <button *ngIf="a.status === 'pending'" class="btn btn-sm btn-success me-1" (click)="updateStatus(a.id, 'approved')">Setujui</button>
+              <button *ngIf="a.status === 'pending'" class="btn btn-sm btn-danger" (click)="updateStatus(a.id, 'rejected')">Tolak</button>
+              <button class="btn btn-sm btn-outline-danger" style="margin-left: 0.5em;" (click)="deleteAttendance(a.id)">Hapus</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

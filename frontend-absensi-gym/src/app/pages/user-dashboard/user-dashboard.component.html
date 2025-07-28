@@ -1,0 +1,55 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <!-- <img src="assets/CHIFIT-LOGIN.png" alt="CHIFIT" class="logo" width="15em" /> -->
+    <h5>Halo, {{ name }}</h5>
+    <button class="btn btn-outline-danger" (click)="LogOut()">Log Out</button>
+  </div>
+
+  <!-- Form Absensi -->
+  <div class="card mb-4">
+    <div class="card-header">
+      Form Absensi
+    </div>
+    <div class="card-body">
+      <form>
+        <div class="mb-3">
+          <label for="trainingType" class="form-label">Jenis Latihan</label>
+          <select class="form-select" [(ngModel)]="selectedTrainingType" id="trainingType" name="trainingType" required>
+            <option *ngFor="let type of trainingTypes" [value]="type.id">{{ type.name }}</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="notes" class="form-label">Catatan</label>
+          <textarea class="form-control" [(ngModel)]="notes" id="notes" name="notes" rows="3" placeholder="Tambahkan catatan jika ada..."></textarea>
+        </div>
+
+        <button type="button" class="btn btn-primary" (click)="submitAttendance()">Kirim Absensi</button>
+
+        <div *ngIf="message" class="alert alert-success mt-3">{{ message }}</div>
+        <div *ngIf="error" class="alert alert-danger mt-3">{{ error }}</div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Riwayat Absensi -->
+  <div>
+    <h6>Riwayat Absensi</h6>
+    <div *ngIf="attendances.length === 0" class="text-muted">Belum ada absensi</div>
+
+    <div *ngFor="let a of attendances" class="card mt-3">
+      <div class="card-body">
+        <h6 class="card-title">{{ a.training_type }}</h6>
+        <p class="mb-1"><strong>Status: </strong>
+          <span class="badge" [ngClass]="{
+            'bg-warning': a.status === 'pending',
+            'bg-success': a.status === 'approved',
+            'bg-danger': a.status === 'rejected'
+          }">{{ a.status }}</span>
+        </p>
+        <p class="mb-1"><strong>Tanggal:</strong> {{ a.date | date:'medium' }}</p>
+        <p class="mb-1"><strong>Catatan:</strong> {{ a.notes }}</p>
+      </div>
+    </div>
+  </div>
+</div>
