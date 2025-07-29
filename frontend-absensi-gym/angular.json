@@ -22,6 +22,9 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/assets",
+              "src/favicon.ico",
+              "src/manifest.webmanifest",
+
               {
                 "glob": "_redirects",
                 "input": "src/assets",
@@ -83,6 +86,8 @@
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               "src/assets",
+              "src/favicon.ico",
+              "src/manifest.webmanifest",
               {
                 "glob": "_redirects",
                 "input": "src/assets",
