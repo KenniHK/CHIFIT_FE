@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class AttendanceServiceAdmin {
-  private apiUrl = 'http://localhost:3000/api';
+  private apiUrl = 'chifitbend-production.up.railway.app';
 
   constructor(private http: HttpClient) {}
 
