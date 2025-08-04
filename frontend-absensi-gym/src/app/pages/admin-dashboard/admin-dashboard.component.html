@@ -16,9 +16,17 @@
         <div class="col-md-5">
           <input [(ngModel)]="newTraining.name" name="name" class="form-control" placeholder="Nama" required />
         </div>
-        <div class="col-md-5">
-          <input [(ngModel)]="newTraining.description" name="description" class="form-control" placeholder="Deskripsi" required />
+
+        <div class="input-group col-md-5">
+        <span class="input-group-text">Detail</span>
+        <textarea 
+        [(ngModel)]="newTraining.description" 
+        name="description" 
+        placeholder="Deskripsi" 
+        required
+        class="form-control" aria-label="With textarea"></textarea>
         </div>
+
         <div class="col-md-2">
           <button type="submit" class="btn btn-primary w-100">Tambah</button>
         </div>
