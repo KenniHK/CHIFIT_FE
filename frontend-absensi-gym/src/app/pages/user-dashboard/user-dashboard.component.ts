@@ -87,4 +87,10 @@ export class DashboardUserComponent implements OnInit {
       error: () => this.error = 'Gagal mengambil riwayat absensi',
     });
   }
+
+  get selectedTrainingDescription(): string {
+  const selected = this.trainingTypes?.find(t => t.id === this.selectedTrainingType);
+  return selected?.description || 'Tidak ada deskripsi';
+  }
+
 }

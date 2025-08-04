@@ -17,6 +17,12 @@
           <select class="form-select" [(ngModel)]="selectedTrainingType" id="trainingType" name="trainingType" required>
             <option *ngFor="let type of trainingTypes" [value]="type.id">{{ type.name }}</option>
           </select>
+          <div *ngIf="selectedTrainingType">
+          <small class="text-muted">
+            <small class="text-muted">{{ selectedTrainingDescription }}</small>
+          </small>
+        </div>
+
         </div>
 
         <div class="mb-3">
