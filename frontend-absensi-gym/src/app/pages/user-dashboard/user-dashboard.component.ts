@@ -89,8 +89,9 @@ export class DashboardUserComponent implements OnInit {
   }
 
   get selectedTrainingDescription(): string {
-  const selected = this.trainingTypes?.find(t => t.id === this.selectedTrainingType);
+  const selected = this.trainingTypes?.find(t => t.id == this.selectedTrainingType);
   return selected?.description || 'Tidak ada deskripsi';
-  }
+}
+
 
 }
