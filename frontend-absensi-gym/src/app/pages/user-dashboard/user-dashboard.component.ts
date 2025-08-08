@@ -18,6 +18,7 @@ export class DashboardUserComponent implements OnInit {
   selectedTrainingType: string = '';
   notes: string = '';
   attendances: any[] = [];
+  attendanceId: number | null = null;
   message = '';
   error = '';
 
@@ -38,9 +39,31 @@ export class DashboardUserComponent implements OnInit {
   }
 
   submitAttendance() {
-    if (!this.selectedTrainingType) return;
+    if (!this.selectedTrainingType) {
+      this.error = 'Pilih jenis latihan';
+      return;
+    };
+    
+    const payload: any = {
+      training_type_id: this.selectedTrainingType,
+      notes: this.notes || ''
+    }
 
-    this.attendanceService.submitAttendance(Number(this.selectedTrainingType), this.notes).subscribe({
+    if (this.attendanceId) {
+      this.attendanceService.editMyAttendances(this.attendanceId, payload).subscribe({
+        next: () => {
+          this.message = 'Absensi berhasil diupdate!';
+          this.error = '';
+          this.resetForm();
+          this.fetchMyAttendances();
+        },
+        error: (err) => {
+          this.error = 'Gagal ambil absensi';
+          console.error(err);
+        }
+      });
+    } else {
+      this.attendanceService.submitAttendance(Number(this.selectedTrainingType), this.notes).subscribe({
       next: () => {
         this.message = 'Absensi berhasil dikirim!';
         this.notes = '';
@@ -58,6 +81,20 @@ export class DashboardUserComponent implements OnInit {
         this.error = 'Gagal mengirim absensi';
       },
     });
+    }
+  }
+
+  editAttendance(att: any) {
+    this.attendanceId = att.id;
+    this.selectedTrainingType = att.training_type_id;
+    this.notes = att.notes;
+    window.scrollTo({ top: 0, behavior: 'smooth'});
+  }
+
+  resetForm() {
+    this.attendanceId = null;
+    this.selectedTrainingType = '';
+    this.notes = '';
   }
 
   LogOut() {
@@ -92,6 +129,5 @@ export class DashboardUserComponent implements OnInit {
   const selected = this.trainingTypes?.find(t => t.id == this.selectedTrainingType);
   return selected?.description || 'Tidak ada deskripsi';
 }
-
 
 }

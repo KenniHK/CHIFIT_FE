@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+// Service User
 
 @Injectable({ providedIn: 'root' })
 export class AttendanceService {
@@ -26,5 +29,9 @@ export class AttendanceService {
 
   getMyAttendances() {
     return this.http.get(`${this.apiUrl}/absensi/mine`, this.getAuthHeaders());
+  }
+
+  editMyAttendances(id: number, data: {training_type_id: number, notes: string}): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/absensi/editAttendance/${id}`, data, this.getAuthHeaders());
   }
 }

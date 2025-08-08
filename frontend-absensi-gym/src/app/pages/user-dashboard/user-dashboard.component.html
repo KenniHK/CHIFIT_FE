@@ -32,7 +32,9 @@
           <textarea class="form-control" [(ngModel)]="notes" id="notes" name="notes" rows="3" placeholder="Tambahkan catatan jika ada..."></textarea>
         </div>
 
-        <button type="button" class="btn btn-primary" (click)="submitAttendance()">Kirim Absensi</button>
+        <button type="button" class="btn btn-primary" (click)="submitAttendance()">
+          {{ attendanceId ? 'Update Absensi' : 'Kirim Absensi' }}
+        </button>
 
         <div *ngIf="message" class="alert alert-success mt-3">{{ message }}</div>
         <div *ngIf="error" class="alert alert-danger mt-3">{{ error }}</div>
@@ -57,6 +59,13 @@
         </p>
         <p class="mb-1"><strong>Tanggal:</strong> {{ a.date | date:'medium' }}</p>
         <p class="mb-1"><strong>Catatan:</strong> {{ a.notes }}</p>
+        <button 
+        type="button" 
+        class="btn btn-outline-warning" 
+        style="padding: 0.5em 3em;"
+        (click)="editAttendance(a)">
+          Edit
+        </button>
       </div>
     </div>
   </div>
