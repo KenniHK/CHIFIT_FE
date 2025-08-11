@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgModel } from '@angular/forms';
+import * as bootstrap from 'bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { AttendanceServiceAdmin } from '../../services/attendance.service.admin';
 import { AuthService } from '../../services/auth.services';
+
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -19,6 +21,9 @@ export class DashboardAdminComponent implements OnInit {
   editingTraining: any = null;
 
   attendances: any[] = [];
+  commentingId: number | null = null;
+  selectedAttendanceId: number | null = null;
+  commentText: string = '';
   error = '';
   message = '';
 
@@ -108,7 +113,7 @@ export class DashboardAdminComponent implements OnInit {
     this.attendanceServiceAdmin.deleteAttendance(id).subscribe({
       next: () => {
         this.message = 'Absensi berhasil dihapus';
-        this.fetchAllAttendances(); // Reload data absensi
+        this.fetchAllAttendances();
       },
       error: (err) => {
         this.error = 'Gagal menghapus absensi';
@@ -116,5 +121,40 @@ export class DashboardAdminComponent implements OnInit {
       }
     });
   }
+}
+
+  openCommentModal(id: number) {
+  this.selectedAttendanceId = id;
+  this.commentText = '';
+  const modalEl = document.getElementById('commentModal');
+  if (modalEl) {
+    const modal = new bootstrap.Modal(modalEl);
+    modal.show();
+  }
+}
+
+submitComment() {
+    if (!this.commentText.trim() || !this.selectedAttendanceId) return;
+
+    this.attendanceServiceAdmin.commentAttendanceNote({
+      id: this.selectedAttendanceId,
+      comment: this.commentText
+    })
+    .subscribe({
+      next: () => {
+        this.fetchAllAttendances();
+        this.selectedAttendanceId = null;
+        this.commentText = '';
+
+        const modalEl = document.getElementById('commentModal');
+        if (modalEl) {
+          const modal = bootstrap.Modal.getInstance(modalEl);
+          modal?.hide();
+        }
+      },
+      error: (err) => {
+        console.error('Gagal mengirim komentar', err);
+      }
+    });
   }
 }

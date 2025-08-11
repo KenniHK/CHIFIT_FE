@@ -82,8 +82,10 @@
           <tr>
             <th>#</th>
             <th>Email</th>
+            <th>Waktu</th>
             <th>Jenis Latihan</th>
             <th>Catatan</th>
+            <th>Komentar</th>
             <th>Status</th>
             <th>Aksi</th>
           </tr>
@@ -92,8 +94,10 @@
           <tr *ngFor="let a of attendances; let i = index">
             <td>{{ i + 1 }}</td>
             <td>{{ a.email }}</td>
+            <td>{{ a.created_at |  date:'medium' }}</td>
             <td>{{ a.training_name }}</td>
             <td>{{ a.notes }}</td>
+            <td>{{ a.admin_response }}</td>
             <td>
               <span class="badge" [ngClass]="{
                 'bg-warning': a.status === 'pending',
@@ -107,10 +111,32 @@
               <button *ngIf="a.status === 'pending'" class="btn btn-sm btn-success me-1" (click)="updateStatus(a.id, 'approved')">Setujui</button>
               <button *ngIf="a.status === 'pending'" class="btn btn-sm btn-danger" (click)="updateStatus(a.id, 'rejected')">Tolak</button>
               <button class="btn btn-sm btn-outline-danger" style="margin-left: 0.5em;" (click)="deleteAttendance(a.id)">Hapus</button>
+              <button class="btn btn-sm btn-outline-info" style="margin-left: 0.5em;" (click)="openCommentModal(a.id)">
+              Comment
+            </button>
             </td>
           </tr>
         </tbody>
       </table>
+
+        <!-- Modal Bootstrap -->
+            <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="commentModalLabel">Tambah Komentar Admin</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <textarea [(ngModel)]="commentText" class="form-control" placeholder="Tulis komentar admin..." rows="4"></textarea>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" (click)="submitComment()">Kirim</button>
+                  </div>
+                </div>
+              </div>
+            </div>
     </div>
   </div>
 </div>

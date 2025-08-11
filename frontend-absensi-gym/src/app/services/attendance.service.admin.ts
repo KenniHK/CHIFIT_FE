@@ -24,6 +24,10 @@ export class AttendanceServiceAdmin {
         return this.http.put(`${this.apiUrl}/absensi/${id}`, { status }, this.getAuthHeaders());
     }
 
+    commentAttendanceNote(data : { id: number, comment: string }) {
+     return this.http.put(`${this.apiUrl}/absensi/${data.id}/response`, { admin_response: data.comment }, this.getAuthHeaders());
+    }
+
     getTrainingTypes() {
     return this.http.get(`${this.apiUrl}/latihan`, this.getAuthHeaders());
     }

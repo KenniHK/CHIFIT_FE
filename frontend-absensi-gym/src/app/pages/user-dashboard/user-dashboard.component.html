@@ -59,6 +59,13 @@
         </p>
         <p class="mb-1"><strong>Tanggal:</strong> {{ a.date | date:'medium' }}</p>
         <p class="mb-1"><strong>Catatan:</strong> {{ a.notes }}</p>
+        <div class="card" *ngIf="a.admin_response">
+        <div class="card-body" style="background-color: #e6e6e6;">
+        <p class="mb-1"><strong>Komentar Admin:</strong> <br>
+          {{ a.admin_response }}
+        </p>
+        </div>
+        </div><br>
         <button 
         type="button" 
         class="btn btn-outline-warning" 
