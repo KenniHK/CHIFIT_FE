@@ -130,4 +130,10 @@ export class DashboardUserComponent implements OnInit {
   return selected?.description || 'Tidak ada deskripsi';
 }
 
+get selectedTrainingDescriptionArray(): string[] {
+  if (!this.selectedTrainingDescription) return [];
+  return this.selectedTrainingDescription.split(" - ").map(item => item.trim());
+}
+
+
 }

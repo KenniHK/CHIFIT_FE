@@ -35,7 +35,7 @@
   </div>
 
   <!-- Daftar Jenis Latihan -->
-  <div class="card mb-4">
+  <!-- <div class="card mb-4">
     <div class="card-header">
       Daftar Jenis Latihan
     </div>
@@ -65,7 +65,50 @@
         </div>
       </div>
     </div>
+  </div> -->
+
+  <!-- Daftar Jenis Latihan -->
+<div class="card mb-4">
+  <div class="card-header">
+    Daftar Jenis Latihan
   </div>
+  <div class="card-body">
+    <div *ngFor="let t of trainingTypes" class="mb-3">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ t.name }}</h5>
+          
+          <ul>
+            <li *ngFor="let detail of t.description.split(' - ')">
+              {{ detail }}
+            </li>
+          </ul>
+
+          <div class="mt-3">
+            <button class="btn btn-sm btn-warning me-2" (click)="startEdit(t)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteTraining(t.id)">Hapus</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Mode -->
+      <div *ngIf="editingTraining?.id === t.id" class="row g-2 mt-2">
+        <div class="col-md-4">
+          <input [(ngModel)]="editingTraining.name" name="editName" class="form-control" />
+        </div>
+        <div class="col-md-4">
+          <textarea [(ngModel)]="editingTraining.description" name="editDescription" class="form-control"></textarea>
+        </div>
+        <div class="col-md-4 d-flex gap-2">
+          <button class="btn btn-success" (click)="updateTraining()">Simpan</button>
+          <button class="btn btn-secondary" (click)="cancelEdit()">Batal</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
   <!-- Notifikasi -->
   <div *ngIf="message" class="alert alert-success">{{ message }}</div>

@@ -17,13 +17,25 @@
           <select class="form-select" [(ngModel)]="selectedTrainingType" id="trainingType" name="trainingType" required>
             <option *ngFor="let type of trainingTypes" [value]="type.id">{{ type.name }}</option>
           </select>
-          <div *ngIf="selectedTrainingType">
+          <!-- <div *ngIf="selectedTrainingType">
           <small class="text-muted">
             <small class="form-text mt-1 text-muted">
               {{ selectedTrainingDescription }}
             </small>
           </small>
+        </div> -->
+        <div *ngIf="selectedTrainingType" class="mt-3">
+        <div class="row">
+          <div class="col-md-6" *ngFor="let item of selectedTrainingDescriptionArray">
+            <div class="card mb-2 shadow-sm">
+              <div class="card-body py-2">
+                <small class="text-muted">{{ item }}</small>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
 
         </div>
 
