@@ -5,12 +5,14 @@ import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http'
 import { AttendanceService } from '../../services/attendance.service';
 import { AuthService } from '../../services/auth.services';
 import Swal from 'sweetalert2';
+import { TipsCarouselComponent } from './tips-carousel/tips-carousel.component';
 
 @Component({
   selector: 'app-dashboard-user',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, FormsModule, TipsCarouselComponent],
   templateUrl: './user-dashboard.component.html',
+  styleUrls: ['./user-dashboard.component.css']
 })
 export class DashboardUserComponent implements OnInit {
   name = localStorage.getItem('name') || '';
