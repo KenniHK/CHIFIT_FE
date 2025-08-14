@@ -1,121 +1,51 @@
 <div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
+  <div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 2.5em;">
     <!-- <img src="assets/CHIFIT-LOGIN.png" alt="CHIFIT" class="logo" width="15em" /> -->
-    <h5>Halo, {{ name }}</h5>
+    <h5 class="sectionBadge">Halo, {{ name }}</h5>
     <button class="btn btn-outline-danger" (click)="LogOut()">Log Out</button>
   </div>
 
-  <!-- <div id="carouselExampleCaptions" class="carousel slide">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="assets/ProgresiveOverload.png"  class="d-block w-100" alt="overload">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Progresive Overload</h5>
-        <p>Naikkan beban perlahan setiap 1-2 minggu.</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="assets/cardio.png" class="d-block w-100" alt="cardio">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Kardio setelah latihan beban</h5>
-        <p>Membakar lemak secara maksimal</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="assets/defisit.png" class="d-block w-100" alt="defisit">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Pola makan defisit kalori</h5>
-        <p>Kurangi kalori tapi tetap tinggi protein (ayam, ikan, tempe, tahu).</p>
-      </div>
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div> -->
-<!-- <div id="tipsCarousel" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <div class="card-carousel">
-        <img src="assets/ProgresiveOverload.png" class="card-img" alt="overload">
-        <div class="carousel-caption">
-          <h5>Progresive Overload</h5>
-          <p>Naikkan beban perlahan setiap 1-2 minggu.</p>
-        </div>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <div class="card-carousel">
-        <img src="assets/cardio.png" class="card-img" alt="cardio">
-        <div class="carousel-caption">
-          <h5>Kardio setelah latihan beban</h5>
-          <p>Membakar lemak secara maksimal</p>
-        </div>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <div class="card-carousel">
-        <img src="assets/defisit.png" class="card-img" alt="defisit">
-        <div class="carousel-caption">
-          <h5>Pola makan defisit kalori</h5>
-          <p>Kurangi kalori tapi tetap tinggi protein.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#tipsCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#tipsCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-  </button>
-</div> -->
   <app-tips-carousel></app-tips-carousel>
 
   <br>
   <!-- Form Absensi -->
   <div class="card mb-4">
-    <div class="card-header">
+    <div class="card-header" style="background-color: rgba(74, 74, 207, 0.796); color: white;">
       Form Absensi
     </div>
     <div class="card-body">
       <form>
         <div class="mb-3">
           <label for="trainingType" class="form-label">Jenis Latihan</label>
-          <select class="form-select" [(ngModel)]="selectedTrainingType" id="trainingType" name="trainingType" required>
-            <option *ngFor="let type of trainingTypes" [value]="type.id">{{ type.name }}</option>
+          <select class="form-select" [(ngModel)]="selectedTrainingType" id="trainingType" name="trainingType" required (change)="onTrainingTypeChange()">
+            <option *ngFor="let type of trainingTypes" [value]="type.training_id">{{ type.training_name }}</option>
           </select>
-          <!-- <div *ngIf="selectedTrainingType">
-          <small class="text-muted">
-            <small class="form-text mt-1 text-muted">
-              {{ selectedTrainingDescription }}
-            </small>
-          </small>
-        </div> -->
-        <div *ngIf="selectedTrainingType" class="mt-3">
-        <div class="row">
-          <div class="col-md-6" *ngFor="let item of selectedTrainingDescriptionArray">
-            <div class="card mb-2 shadow-sm">
-              <div class="card-body py-2">
-                <small class="text-muted">{{ item }}</small>
+
+          <div *ngIf="selectedTrainingExercise.length > 0" class="mt-3">
+            <div class="row">
+              <div class="col-md-6" *ngFor="let ex of selectedTrainingExercise; let i = index">
+                <div class="card mb-2 shadow-sm">
+                  <div class="card-body py-2">
+                    <div class="d-flex align-items-center justify-content-between">
+                      <small class="text-muted">{{ ex.name }}</small>
+                      <input type="checkbox"
+                            [(ngModel)]="ex.checked"
+                            name="exerciseCheckbox_{{ i }}">
+                    </div>
+                    <div *ngIf="ex.checked" class="mt-2">
+                      <input type="number"
+                            [(ngModel)]="ex.duration_minutes"
+                            name="duration_{{ i }}"
+                            class="form-control"
+                            placeholder="Durasi (menit)"
+                            min="1">
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
       </div>
-
-
-        </div>
 
         <div class="mb-3">
           <label for="notes" class="form-label">Catatan</label>
@@ -132,38 +62,64 @@
     </div>
   </div>
 
-  <!-- Riwayat Absensi -->
   <div>
-    <h6>Riwayat Absensi</h6>
-    <div *ngIf="attendances.length === 0" class="text-muted">Belum ada absensi</div>
+  <h6 class="sectionBadge">Grafik Kalori Terbakar</h6> <br>
 
-    <div *ngFor="let a of attendances" class="card mt-3">
-      <div class="card-body">
-        <h6 class="card-title">{{ a.training_type }}</h6>
-        <p class="mb-1"><strong>Status: </strong>
-          <span class="badge" [ngClass]="{
-            'bg-warning': a.status === 'pending',
-            'bg-success': a.status === 'approved',
-            'bg-danger': a.status === 'rejected'
-          }">{{ a.status }}</span>
-        </p>
-        <p class="mb-1"><strong>Tanggal:</strong> {{ a.date | date:'medium' }}</p>
-        <p class="mb-1"><strong>Catatan:</strong> {{ a.notes }}</p>
-        <div class="card" *ngIf="a.admin_response">
-        <div class="card-body" style="background-color: #e6e6e6;">
-        <p class="mb-1"><strong>Komentar Admin:</strong> <br>
-          {{ a.admin_response }}
-        </p>
+  <!-- Line Chart: Kalori per tanggal -->
+  <div style="max-width: 600px; margin-bottom: 2em;">
+    <canvas #lineChart></canvas>
+  </div>
+
+  <!-- Donut Chart: Kalori per Training Type -->
+  <div style="max-width: 400px;">
+    <canvas #donutChart></canvas>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <h6 class="sectionBadge">Riwayat Absensi</h6>
+  <div *ngIf="attendances.length === 0" class="text-muted">Belum ada absensi</div>
+
+  <div *ngFor="let a of attendances" class="card mt-3">
+    <div class="card-body">
+      <h6 class="card-title sectionBadgeAbsensi">{{ a.training_type }}</h6><br>
+      <p class="mb-1"><strong>Status: </strong>
+        <span class="badge" [ngClass]="{
+          'bg-warning': a.status === 'pending',
+          'bg-success': a.status === 'approved',
+          'bg-danger': a.status === 'rejected'
+        }">{{ a.status }}</span>
+      </p>
+      <p class="mb-1"><strong>Tanggal:</strong> {{ a.date | date:'medium' }}</p>
+      <p class="mb-1"><strong>Catatan:</strong> {{ a.notes }}</p>
+
+      <!-- Daftar latihan & durasi -->
+      <ul>
+        <li *ngFor="let ex of a.exercises">
+          {{ ex.name }} - {{ ex.duration_minutes }} menit
+        </li>
+      </ul>
+      <p style="font-weight: bold;">Kalori terbakar :</p>
+      <p>🔥 {{ a.total_calories_burned }} kcal</p>
+
+      <div class="card" *ngIf="a.admin_response">
+        <div class="card-body">
+          <p class="mb-1"><strong>Komentar Admin:</strong> <br>
+            {{ a.admin_response }}
+          </p>
         </div>
-        </div><br>
-        <button 
-        type="button" 
-        class="btn btn-outline-warning" 
-        style="padding: 0.5em 3em;"
+      </div><br>
+
+      <button type="button" class="btn btn-outline-warning" style="padding: 0.5em 3em;"
         (click)="editAttendance(a)">
-          Edit
-        </button>
-      </div>
+        Edit
+      </button>
     </div>
   </div>
+</div>
+
+
+
 </div>

@@ -1,3 +1,22 @@
+.sectionBadge {
+  background-color: rgba(74, 74, 207, 0.796);
+  color: white;
+  border-radius: 5px;
+  padding: 0.5em 0.8em;
+  font-weight: bold;
+  max-width: fit-content;
+}
+
+.sectionBadgeAbsensi {
+  background-color: rgba(55, 55, 180, 0.478);
+  color: white;
+  border-radius: 5px;
+  padding: 0.5em 0.8em;
+  font-weight: bold;
+  max-width: 100%;
+  text-align: center;
+}
+
 .card {
   border-radius: 12px;
 }

@@ -23,15 +23,26 @@ export class AttendanceService {
     return this.http.get(`${this.apiUrl}/latihan`, this.getAuthHeaders());
   }
 
-  submitAttendance(training_type_id: number, notes: string) {
-    return this.http.post(`${this.apiUrl}/absensi`, { training_type_id, notes }, this.getAuthHeaders());
+  submitAttendance( training_type_id: number, notes: string, exercises: { exercise_id: number, duration_minutes: number }[] ): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/absensi`,
+      { training_type_id, notes, exercises },
+      this.getAuthHeaders()
+    );
   }
 
-  getMyAttendances() {
-    return this.http.get(`${this.apiUrl}/absensi/mine`, this.getAuthHeaders());
+  getMyAttendances(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/absensi/mine`, this.getAuthHeaders());
   }
 
-  editMyAttendances(id: number, data: {training_type_id: number, notes: string}): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/absensi/editAttendance/${id}`, data, this.getAuthHeaders());
+ editMyAttendances(
+  id: number,
+  data: {
+    training_type_id: number;
+    notes: string;
+    exercises: { exercise_id: number; duration_minutes: number }[];
   }
+  ): Observable<any> {
+      return this.http.put(`${this.apiUrl}/absensi/editAttendance/${id}`, data, this.getAuthHeaders());
+ }
 }
