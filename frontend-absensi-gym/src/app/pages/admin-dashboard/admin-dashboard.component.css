@@ -1,0 +1,102 @@
+.training-card {
+  margin-bottom: 1rem;
+}
+
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  background: #fff;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 0.3rem;
+  color: #2d2d2d;
+}
+
+.card-description {
+  color: #555;
+  margin: 0;
+}
+
+.card-content {
+  padding: 1rem 1.25rem;
+}
+
+.exercise-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  color: #444;
+}
+
+.exercise-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.exercise-list li {
+  display: flex;
+  justify-content: space-between;
+  background: #f8f9fa;
+  padding: 0.5rem 0.7rem;
+  margin-bottom: 0.4rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.exercise-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.met-value {
+  font-weight: 500;
+  color: #007bff;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.btn-edit,
+.btn-delete {
+  border: none;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-edit {
+  background: #ffc107;
+  color: #000;
+}
+
+.btn-edit:hover {
+  background: #e0a800;
+}
+
+.btn-delete {
+  background: #dc3545;
+  color: #fff;
+}
+
+.btn-delete:hover {
+  background: #c82333;
+}

@@ -17,6 +17,11 @@
   text-align: center;
 }
 
+.cardAbsenHeader {
+  background-color: rgb(186, 186, 255) !important;
+  color: white;
+}
+
 .card {
   border-radius: 12px;
 }
@@ -46,6 +51,168 @@
   display: block;
   border-radius: 10px;
 }
+
+.attendance-card {
+  margin-bottom: 1rem;
+}
+
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  background: #fff;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid #eee;
+}
+
+.training-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.status-badge {
+  padding: 0.3rem 0.7rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background-color: #ffeeba;
+  color: #856404;
+}
+
+.status-approved {
+  background-color: #c3e6cb;
+  color: #155724;
+}
+
+.status-rejected {
+  background-color: #f5c6cb;
+  color: #721c24;
+}
+
+.card-content {
+  padding: 1rem;
+}
+
+.card-content p {
+  margin-bottom: 0.4rem;
+}
+
+.exercise-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.4rem 0 0;
+}
+
+.exercise-list li {
+  background: #f8f9fa;
+  padding: 0.4rem 0.6rem;
+  margin-bottom: 0.3rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-highlight {
+  background: #fff3cd;
+  padding: 0.5rem 0.8rem;
+  font-weight: bold;
+  color: #856404;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  border-radius: 1.5em;
+  text-align: center;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.card-footer {
+  padding: 0.8rem 1rem;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.admin-comment {
+  background: #f8f9fa;
+  padding: 0.6rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  border: 1px solid #eee;
+}
+
+.btn-edit {
+  align-self: flex-end;
+  background: #ffc107;
+  color: #000;
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.btn-edit:hover {
+  background: #e0a800;
+}
+
+.attendance-card .card-header,
+.attendance-card .card-footer {
+  border: none !important;
+}
+
+/* Section wrapper */
+.grafik-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 700px;
+  margin: auto;
+}
+
+/* Card styling */
+.grafik-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+/* Card header */
+.grafik-header {
+  background-color: rgba(74, 74, 207, 0.85);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+
+/* Card body */
+.grafik-body {
+  padding: 1rem;
+}
+
+/* Chart canvas responsif */
+.grafik-body canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+
+
 
 /* Efek 3D coverflow */
 #tipsCarousel .carousel-item.active {

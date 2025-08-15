@@ -32,7 +32,7 @@ export class AttendanceServiceAdmin {
     return this.http.get(`${this.apiUrl}/latihan`, this.getAuthHeaders());
     }
 
-    createTraining(data: { name: string, description: string }) {
+    createTraining(data: { name: string, description: string, exercises: { name: string, met_value: number}[] }) {
     return this.http.post(`${this.apiUrl}/latihan`, data, this.getAuthHeaders());
     }
 

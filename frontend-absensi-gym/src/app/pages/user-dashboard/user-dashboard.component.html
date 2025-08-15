@@ -62,19 +62,27 @@
     </div>
   </div>
 
-  <div>
-  <h6 class="sectionBadge">Grafik Kalori Terbakar</h6> <br>
+ <!-- Grafik Kalori -->
+<div class="grafik-section">
+  <h6 class="sectionBadge mb-3">Grafik Kalori Terbakar</h6>
 
-  <!-- Line Chart: Kalori per tanggal -->
-  <div style="max-width: 600px; margin-bottom: 2em;">
-    <canvas #lineChart></canvas>
+  <!-- Line Chart Card -->
+  <div class="grafik-card">
+    <div class="grafik-header">Kalori per Tanggal</div>
+    <div class="grafik-body">
+      <canvas #lineChart></canvas>
+    </div>
   </div>
 
-  <!-- Donut Chart: Kalori per Training Type -->
-  <div style="max-width: 400px;">
-    <canvas #donutChart></canvas>
+  <!-- Donut Chart Card -->
+  <div class="grafik-card">
+    <div class="grafik-header">Kalori per Jenis Latihan</div>
+    <div class="grafik-body">
+      <canvas #donutChart></canvas>
+    </div>
   </div>
 </div>
+
 
 <hr>
 
@@ -82,42 +90,52 @@
   <h6 class="sectionBadge">Riwayat Absensi</h6>
   <div *ngIf="attendances.length === 0" class="text-muted">Belum ada absensi</div>
 
-  <div *ngFor="let a of attendances" class="card mt-3">
-    <div class="card-body">
-      <h6 class="card-title sectionBadgeAbsensi">{{ a.training_type }}</h6><br>
-      <p class="mb-1"><strong>Status: </strong>
-        <span class="badge" [ngClass]="{
-          'bg-warning': a.status === 'pending',
-          'bg-success': a.status === 'approved',
-          'bg-danger': a.status === 'rejected'
-        }">{{ a.status }}</span>
-      </p>
-      <p class="mb-1"><strong>Tanggal:</strong> {{ a.date | date:'medium' }}</p>
-      <p class="mb-1"><strong>Catatan:</strong> {{ a.notes }}</p>
+  <div *ngFor="let a of attendances" class="attendance-card">
+  <div class="card">
+    <!-- HEADER -->
+    <div class="card-header cardAbsenHeader">
+      <h6 class="training-title">{{ a.training_type }}</h6>
+      <span class="status-badge" 
+        [ngClass]="{
+          'status-pending': a.status === 'pending',
+          'status-approved': a.status === 'approved',
+          'status-rejected': a.status === 'rejected'
+        }">
+        {{ a.status }}
+      </span>
+    </div>
 
-      <!-- Daftar latihan & durasi -->
-      <ul>
+    <!-- DETAIL -->
+    <div class="card-content">
+      <p><strong>Tanggal:</strong> {{ a.date | date:'medium' }}</p>
+      <p><strong>Catatan:</strong> {{ a.notes }}</p>
+
+      <h6>Latihan:</h6>
+      <ul class="exercise-list">
         <li *ngFor="let ex of a.exercises">
-          {{ ex.name }} - {{ ex.duration_minutes }} menit
+          {{ ex.name }} <span>- {{ ex.duration_minutes }} menit</span>
         </li>
       </ul>
-      <p style="font-weight: bold;">Kalori terbakar :</p>
-      <p>🔥 {{ a.total_calories_burned }} kcal</p>
+    </div>
 
-      <div class="card" *ngIf="a.admin_response">
-        <div class="card-body">
-          <p class="mb-1"><strong>Komentar Admin:</strong> <br>
-            {{ a.admin_response }}
-          </p>
-        </div>
-      </div><br>
+    <!-- HIGHLIGHT -->
+    <div class="card-highlight">
+      <p style="margin: auto 0;">🔥 <strong>{{ a.total_calories_burned }}</strong> kcal terbakar</p>
+    </div>
 
-      <button type="button" class="btn btn-outline-warning" style="padding: 0.5em 3em;"
-        (click)="editAttendance(a)">
+    <!-- FOOTER -->
+    <div class="card-footer">
+      <div *ngIf="a.admin_response" class="admin-comment">
+        <strong>Komentar Admin:</strong>
+        <p>{{ a.admin_response }}</p>
+      </div>
+      <button type="button" class="btn-edit" (click)="editAttendance(a)">
         Edit
       </button>
     </div>
   </div>
+</div>
+
 </div>
 
 

@@ -13,11 +13,18 @@ import { AuthService } from '../../services/auth.services';
   standalone: true,
   imports: [CommonModule, HttpClientModule, FormsModule],
   templateUrl: './admin-dashboard.component.html',
+  styleUrls: ['./admin-dashboard.component.css']
 })
-export class DashboardAdminComponent implements OnInit {
+export class DashboardAdminComponent implements OnInit {  
+  newTraining = {
+    name: '',
+    description: '',
+    exercises: [
+      { name: '', met_value: 0 }
+    ]
+  };
   trainingTypes: any[] = [];
   name = localStorage.getItem('name') || '';
-  newTraining = { name: '', description: '' };
   editingTraining: any = null;
 
   attendances: any[] = [];
@@ -62,12 +69,20 @@ export class DashboardAdminComponent implements OnInit {
     });
   }
 
+  addExercise() {
+    this.newTraining.exercises.push({ name: '', met_value: 0 });
+  };
+
+  removeExercise(index: number) {
+    this.newTraining.exercises.splice(index, 1);
+  }
+
   createTraining() {
     this.attendanceServiceAdmin.createTraining(this.newTraining).subscribe({
       next: () => {
         this.message = 'Jenis latihan berhasil ditambahkan';
-        this.newTraining = { name: '', description: '' };
         this.fetchTrainingTypes();
+        this.newTraining = { name: '', description: '', exercises: [{ name: '', met_value: 0 }] };
       },
       error: () => this.error = 'Gagal menambahkan jenis latihan',
     });
