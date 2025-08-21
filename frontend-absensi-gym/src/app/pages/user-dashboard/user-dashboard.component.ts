@@ -265,7 +265,19 @@ editAttendance(att: any) {
   }, 0);
 
   // Scroll ke form
-  window.scrollTo({ top: 350, behavior: 'smooth' });
+  setTimeout(() => {
+    const element = document.getElementById('editAbsensi');
+
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest'
+      });
+    } else {
+      console.warn(`Element not found.`);
+    }
+  }, 0);
 }
 
 

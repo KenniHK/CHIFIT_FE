@@ -1,7 +1,7 @@
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 2.5em;">
     <!-- <img src="assets/CHIFIT-LOGIN.png" alt="CHIFIT" class="logo" width="15em" /> -->
-    <h5 class="sectionBadge">Halo, {{ name }}</h5>
+    <h5 class="sectionBadge" style="font-style: italic;">Halo, {{ name }}</h5>
     <button class="btn btn-outline-danger" (click)="LogOut()">Log Out</button>
   </div>
 
@@ -9,7 +9,7 @@
 
   <br>
   <!-- Form Absensi -->
-  <div class="card mb-4">
+  <div class="card mb-4" id="editAbsensi">
     <div class="card-header" style="background-color: rgba(74, 74, 207, 0.796); color: white;">
       Form Absensi
     </div>
@@ -113,7 +113,7 @@
       <h6>Latihan:</h6>
       <ul class="exercise-list">
         <li *ngFor="let ex of a.exercises">
-          {{ ex.name }} <span>- {{ ex.duration_minutes }} menit</span>
+          {{ ex.name }} <span style=" color: rgb(1, 123, 231);"> {{ ex.duration_minutes }} menit</span>
         </li>
       </ul>
     </div>

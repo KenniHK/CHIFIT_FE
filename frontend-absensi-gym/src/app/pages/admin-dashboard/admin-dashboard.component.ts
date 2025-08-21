@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgModel } from '@angular/forms';
 import * as bootstrap from 'bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { AttendanceServiceAdmin } from '../../services/attendance.service.admin';
 import { AuthService } from '../../services/auth.services';
+import 'datatables.net';
+
+declare var $: any;
 
 
 @Component({
@@ -28,6 +30,7 @@ export class DashboardAdminComponent implements OnInit {
   editingTraining: any = null;
 
   attendances: any[] = [];
+  dtInitialized = false;
   commentingId: number | null = null;
   selectedAttendanceId: number | null = null;
   commentText: string = '';
@@ -44,10 +47,40 @@ export class DashboardAdminComponent implements OnInit {
     this.fetchTrainingTypes();
   }
 
-  fetchAllAttendances() {
+    fetchAllAttendances() {
     this.attendanceServiceAdmin.getAllAttendances().subscribe({
-      next: (res: any) => this.attendances = res,
+      next: (res: any) => {
+        this.attendances = res;
+
+        // Delay sedikit supaya Angular render dulu
+        setTimeout(() => {
+          if (this.dtInitialized) {
+            // destroy dulu kalau sudah pernah di-init
+            $('#attendanceTable').DataTable().clear().destroy();
+          }
+          this.initDataTable();
+          this.dtInitialized = true;
+        }, 200);
+      },
       error: () => this.error = 'Gagal mengambil data absensi',
+    });
+  }
+
+  initDataTable() {
+    ($('#attendanceTable') as any).DataTable({
+      paging: true,
+      searching: true,
+      ordering: true,
+      pageLength: 5,
+      language: {
+        search: "Cari:",
+        lengthMenu: "Tampilkan _MENU_ data per halaman",
+        info: "Menampilkan _START_ - _END_ dari _TOTAL_ data",
+        paginate: {
+          previous: "‹",
+          next: "›"
+        }
+      }
     });
   }
 
@@ -89,17 +122,50 @@ export class DashboardAdminComponent implements OnInit {
   }
 
   startEdit(training: any) {
-    this.editingTraining = { ...training };
+    this.editingTraining = JSON.parse(JSON.stringify(training));
+
+    
+    setTimeout(() => {
+    const element = document.getElementById('editLatihan');
+
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest'
+      });
+    } else {
+      console.warn(`Element not found.`);
+    }
+  }, 0);
   }
 
   updateTraining() {
-    this.attendanceServiceAdmin.updateTraining(this.editingTraining).subscribe({
+    const payload = {
+      name: this.editingTraining.training_name,
+      description: this.editingTraining.description,
+      exercises: this.editingTraining.exercises?.map((ex: any) => ({
+        name: ex.name,
+        met_value: Number(ex.met_value)
+      }))
+    };
+
+    console.log('Payload Final: ', payload);
+    console.log('ID yang dipakai:', this.editingTraining.training_id);
+
+    this.attendanceServiceAdmin.updateTraining(
+      this.editingTraining.training_id,
+      payload
+    ).subscribe({
       next: () => {
-        this.message = 'Jenis latihan berhasil diupdate';
+        this.message = 'Jenis latihan berhasil di update';
         this.editingTraining = null;
         this.fetchTrainingTypes();
       },
-      error: () => this.error = 'Gagal mengupdate jenis latihan',
+      error: (err) => {
+        console.error('Error update training:', err);
+        this.error = 'Gagal mengupdate jenis latihan';
+      },
     });
   }
 

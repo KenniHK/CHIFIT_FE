@@ -36,8 +36,8 @@ export class AttendanceServiceAdmin {
     return this.http.post(`${this.apiUrl}/latihan`, data, this.getAuthHeaders());
     }
 
-    updateTraining(data: { id: number, name: string, description: string }) {
-    return this.http.put(`${this.apiUrl}/latihan/${data.id}`, data, this.getAuthHeaders());
+    updateTraining(id: number, training: any) {
+      return this.http.put(`${this.apiUrl}/latihan/${id}`, training, this.getAuthHeaders());
     }
 
     deleteTraining(id: number) {

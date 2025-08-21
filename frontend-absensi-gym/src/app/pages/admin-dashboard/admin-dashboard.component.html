@@ -46,6 +46,52 @@
     </div>
    </div>
 
+   <!-- Form Edit Latihan -->
+    <div class="card mb-4" *ngIf="editingTraining" id="editLatihan">
+      <div class="card-header">
+        Edit Jenis Latihan
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="updateTraining()" class="row g-2">
+          <div class="col-md-4">
+            <input [(ngModel)]="editingTraining.training_name"
+            name="editName"
+            class="form-control"
+            placeholder="Nama Jenis Latihan" required />
+          </div>
+
+          <div class="col-md-4">
+            <textarea [(ngModel)]="editingTraining.description"
+                      name="editDescription"
+                      placeholder="Deskripsi"
+                      class="form-control" required>
+            </textarea>
+          </div>
+
+          <div class="col-md-12">
+            <h6>Daftar Latihan (Exercises)</h6>
+            <div *ngFor="let ex of editingTraining.exercises; let i = index" class="row g-2 mb-2">
+              <div class="col-md-5">
+                <input [(ngModel)]="ex.name" name="editExerciseName{{i}}" placeholder="Nama Latihan" class="form-control" required />
+              </div>
+              <div class="col-md-5">
+                <input type="number" step="0.01" [(ngModel)]="ex.met_value" name="editExerciseMet{{i}}" placeholder="MET Value" class="form-control" required />
+              </div>
+              <div class="col-md-2">
+                <button type="button" class="btn btn-danger w-100" (click)="editingTraining.exercises.splice(i,1)">Hapus</button>
+              </div>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-primary" (click)="editingTraining.exercises.push({ name: '', met_value: 0 })">+ Tambah Latihan</button>
+          </div>
+
+          <div class="col-md-12 mt-3">
+            <button type="submit" class="btn btn-success">Update</button>
+            <button type="button" class="btn btn-secondary ms-2" (click)="cancelEdit()">Batal</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
 
   <!-- Daftar Jenis Latihan -->
 <div *ngFor="let t of trainingTypes" class="training-card">
@@ -77,13 +123,15 @@
   <div *ngIf="message" class="alert alert-success">{{ message }}</div>
   <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
-  <!-- Tabel Absensi -->
+
   <div class="card">
     <div class="card-header">
       Data Absensi Pengguna
     </div>
     <div class="table-responsive">
-      <table class="table table-striped mb-0">
+
+      <!-- Tabel Absensi -->
+      <!-- <table class="table table-striped mb-0">
         <thead class="table-light">
           <tr>
             <th>#</th>
@@ -100,8 +148,19 @@
           <tr *ngFor="let a of attendances; let i = index">
             <td>{{ i + 1 }}</td>
             <td>{{ a.email }}</td>
-            <td>{{ a.created_at |  date:'medium' }}</td>
-            <td>{{ a.training_name }}</td>
+            <td>{{ a.date |  date:'medium' }}</td>
+            <td>
+              <div class="exercise-list">
+              <ul>
+                <li *ngFor="let ex of a.exercises">
+                  <div class="exercise-detail">
+                  <span>{{ex.name}}</span>
+                  <span style="margin-left: 1em;">{{ex.duration_minutes}} menit</span>
+                  </div>
+                </li>
+              </ul>
+              </div>
+            </td>
             <td>{{ a.notes }}</td>
             <td>{{ a.admin_response }}</td>
             <td>
@@ -123,7 +182,56 @@
             </td>
           </tr>
         </tbody>
+      </table> -->
+
+    <div class="table-responsive">
+      <table id="attendanceTable" class="custom-datatable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Email</th>
+            <th>Waktu</th>
+            <th>Jenis Latihan</th>
+            <th>Catatan</th>
+            <th>Komentar</th>
+            <th>Status</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of attendances; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ a.email }}</td>
+            <td>{{ a.date | date:'medium' }}</td>
+            <td>
+              <ul class="exercise-list">
+                <li *ngFor="let ex of a.exercises">
+                  <span>{{ ex.name }}</span>
+                  <span class="text-muted ms-2">{{ ex.duration_minutes }} menit</span>
+                </li>
+              </ul>
+            </td>
+            <td>{{ a.notes }}</td>
+            <td>{{ a.admin_response }}</td>
+            <td>
+              <span class="badge" [ngClass]="{
+                'bg-warning text-dark': a.status === 'pending',
+                'bg-success': a.status === 'approved',
+                'bg-danger': a.status === 'rejected'
+              }">{{ a.status }}</span>
+            </td>
+            <td>
+              <button *ngIf="a.status === 'pending'" class="btn btn-sm btn-success me-1"
+                (click)="updateStatus(a.id, 'approved')">Setujui</button>
+              <button *ngIf="a.status === 'pending'" class="btn btn-sm btn-danger me-1"
+                (click)="updateStatus(a.id, 'rejected')">Tolak</button>
+              <button class="btn btn-sm btn-outline-danger me-1" (click)="deleteAttendance(a.id)">Hapus</button>
+              <button class="btn btn-sm btn-outline-info" (click)="openCommentModal(a.id)">Komentar</button>
+            </td>
+          </tr>
+        </tbody>
       </table>
+    </div>
 
         <!-- Modal Bootstrap -->
             <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">

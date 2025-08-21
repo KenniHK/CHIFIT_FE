@@ -1,5 +1,6 @@
 .training-card {
   margin-bottom: 1rem;
+  color: white;
 }
 
 .card {
@@ -13,17 +14,19 @@
 .card-header {
   padding: 1rem 1.25rem;
   border-bottom: 1px solid #f0f0f0;
+  background-color: rgba(117, 117, 241, 0.85);
+  color: white;
 }
 
 .card-title {
   font-size: 1.2rem;
   font-weight: 600;
   margin: 0 0 0.3rem;
-  color: #2d2d2d;
+  color: white;
 }
 
 .card-description {
-  color: #555;
+  color: white;
   margin: 0;
 }
 
@@ -99,4 +102,84 @@
 
 .btn-delete:hover {
   background: #c82333;
+}
+
+.exercise-detail {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Header ungu seperti card-header */
+.custom-datatable thead {
+  background-color: rgba(117, 117, 241, 0.85);
+  color: #fff;
+}
+
+/* Stripe row */
+.custom-datatable tbody tr:nth-child(even) {
+  background-color: #f8f9ff;
+}
+.custom-datatable tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+/* Hover row */
+.custom-datatable tbody tr:hover {
+  background-color: #eef0ff;
+  cursor: pointer;
+}
+
+/* Cell padding */
+.custom-datatable th,
+.custom-datatable td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e6e6f5;
+  text-align: left;
+}
+
+/* Search box → Bootstrap style */
+.dataTables_wrapper .dataTables_filter input {
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  width: auto;
+  display: inline-block;
+}
+
+.dataTables_wrapper .dataTables_filter label {
+  font-weight: 500;
+  margin-bottom: 0;
+}
+
+/* Length menu → Bootstrap select */
+.dataTables_wrapper .dataTables_length select {
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+  padding: 0.375rem 2rem 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  appearance: auto; 
+}
+
+/* Pagination → Bootstrap style */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  border: none !important;
+  padding: 0.375rem 0.75rem;
+  margin: 0 2px;
+  border-radius: 0.375rem;
+  background: #f0f0ff;
+  color: #444 !important;
+  font-size: 0.875rem;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background: rgba(117, 117, 241, 0.85) !important;
+  color: #fff !important;
+  font-weight: bold;
+}
+
+.table-responsive {
+  padding: 0.5em;
 }
