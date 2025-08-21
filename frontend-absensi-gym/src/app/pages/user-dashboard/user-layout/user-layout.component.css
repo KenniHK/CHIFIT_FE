@@ -1,0 +1,5 @@
+.nav-item.active {
+  background-color: rgba(117, 117, 241, 0.85);
+  color: white !important;
+  font-weight: 500;
+}

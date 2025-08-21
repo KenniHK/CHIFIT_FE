@@ -1,0 +1,50 @@
+<div class="flex flex-col items-center justify-center h-full p-4">
+  <h2 class="text-xl font-bold mb-4" style="padding-top: 3em;">⏱ Stopwatch</h2>
+
+  <div class="text-4xl font-mono mb-4">
+    {{ formatTime(elapsedSeconds) }}
+  </div>
+
+  <div class="flex gap-2 mb-4">
+    <!-- Start -->
+    <button
+      class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md transform transition duration-150 hover:scale-105 active:scale-95"
+      (click)="startTimer()"
+    >
+      Start
+    </button>
+
+    <!-- Pause -->
+    <button
+      class="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-md transform transition duration-150 hover:scale-105 active:scale-95"
+      (click)="stopTimer()"
+    >
+      Pause
+    </button>
+
+    <!-- Reset -->
+    <button
+      class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md transform transition duration-150 hover:scale-105 active:scale-95"
+      (click)="resetTimer()"
+    >
+      Reset
+    </button>
+
+    <!-- Lap -->
+    <button
+      class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md transform transition duration-150 hover:scale-105 active:scale-95"
+      (click)="addLap()"
+    >
+      Lap
+    </button>
+  </div>
+
+  <div class="w-full max-w-sm">
+    <h3 class="font-semibold mb-2">Laps</h3>
+    <ul class="list-disc pl-6">
+      <li *ngFor="let lap of laps; let i = index">
+        Set {{ i+1 }}: {{ formatTime(lap) }}
+      </li>
+    </ul>
+  </div>
+</div>

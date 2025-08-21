@@ -8,7 +8,9 @@ import Swal from 'sweetalert2';
 import { TipsCarouselComponent } from './tips-carousel/tips-carousel.component';
 import { AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Chart, ChartDataset, registerables } from 'chart.js';
+import { RouterModule } from '@angular/router';
 Chart.register(...registerables);
+
 
 @Component({
   selector: 'app-dashboard-user',
@@ -17,7 +19,8 @@ Chart.register(...registerables);
     CommonModule, 
     HttpClientModule, 
     FormsModule, 
-    TipsCarouselComponent
+    TipsCarouselComponent,
+    RouterModule
   ],
   templateUrl: './user-dashboard.component.html',
   styleUrls: ['./user-dashboard.component.css']
